@@ -32,11 +32,13 @@ object Sorting {
   }
 
   // Note that in one pass, bubbleSort places the greatest element in the
-  // last position in the array. This is generalized by saying that in the
-  // nth pass, the nth greatest element is put into its sorted place. The
-  // invariant here is similar to selection sort: there is a "sorted"
-  // section (the end of the array with the greatest elements) and an
-  // unsorted section.
+  // last position in the array. In an array of size n, if the greatest
+  // element x is in index i for i < n-1, then in the first pass, x will
+  // be swapped with each elements in the indices [i+1, n-1]. This is
+  // generalized by saying that in the nth pass, the nth greatest element
+  // is put into its sorted place. The invariant here is similar to selection
+  // sort: there is a "sorted" section (the end of the array with the greatest
+  // elements) and an unsorted section.
   def bubbleSort(input: Array[Int]) = {
     breakable {
       var noSwaps = true
@@ -56,13 +58,15 @@ object Sorting {
     input
   }
 
-  def printArray[T](arg: Array[T]) = {
-    println(arg.toList)
+  // Again, same idea as the previous two: keep a sorted section
+  // and an unsorted section.
+  def insertionSort(input: Array[Int]) = {
+
   }
 
   def main(args: Array[String]) = {
     val test1 = Array(5, 7, 3, 4, 2, -100)
-    printArray(selectionSort(test1))
-    printArray(bubbleSort(test1))
+    util.Util.printArray(selectionSort(test1))
+    util.Util.printArray(bubbleSort(test1))
   }
 }
