@@ -1,4 +1,4 @@
-
+import scala.util.control.Breaks._
 
 object Sorting {
   // For simplicity we will be doing ascending sorts
@@ -31,11 +31,38 @@ object Sorting {
     input
   }
 
+  // Note that in one pass, bubbleSort places the greatest element in the
+  // last position in the array. This is generalized by saying that in the
+  // nth pass, the nth greatest element is put into its sorted place. The
+  // invariant here is similar to selection sort: there is a "sorted"
+  // section (the end of the array with the greatest elements) and an
+  // unsorted section.
+  def bubbleSort(input: Array[Int]) = {
+    breakable {
+      var noSwaps = true
+      for (end <- (0 until (input.length - 1)).reverse) {
+        for (i <- 0 until end) {
+          if (input(i) > input(i+1)) {
+            // swap places in the array (without a temp!)
+            input(i) += input(i+1)
+            input(i+1) = input(i) - input(i+1)
+            input(i) -= input(i+1)
+            noSwaps = false
+          }
+        }
+        if (noSwaps) break else noSwaps = false
+      }
+    }
+    input
+  }
+
   def printArray[T](arg: Array[T]) = {
     println(arg.toList)
   }
 
   def main(args: Array[String]) = {
-    printArray(selectionSort(Array(5, 7, 3, 4, 2, -100)))
+    val test1 = Array(5, 7, 3, 4, 2, -100)
+    printArray(selectionSort(test1))
+    printArray(bubbleSort(test1))
   }
 }
